@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Geist } from "next/font/google";
+import { Geist, Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-main", // Essa variável conecta com o tailwind.config
+});
 
 export const metadata: Metadata = {
   title: "Spot Creators | Aceleradora de Creators",
@@ -16,7 +20,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" className={cn("dark", "font-sans", geist.variable)}>
+    <html
+      lang="pt-BR"
+      className={cn("dark", "font-sans", geist.variable, inter.variable)}
+    >
       <body className="noise-overlay">{children}</body>
     </html>
   );
