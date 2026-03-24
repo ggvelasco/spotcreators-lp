@@ -22,14 +22,14 @@ const creators = [
     handle: "@tuitabi",
     tags: "Games • Pop",
     img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBZCJJACzeSOlfnJrKDdgBAVu--LsiukJkzDKQO4ngGD2I3uGIvO7pqhUDpn_RQn-3ZguE1qR_GrTzljDINCu_w1cej4GaPeGq55h2YZlxIQDkwQXmZFXYTI4RvgDiNhSjIRfylc_7vBu-BiBOXhVKok3D1f3RHJertQNWQbaOrQnsJ7iu05Y1IHk7h1ViVdqlqYztH3_od5D5MRYE4aZ1EE34te2dV9r-IF42AKvxIQHoL3gxM40F-VdiILrbaAbIUTionhfADFSM",
-    offset: 32,
+    offset: 0,
   },
   {
     name: "Dengoso",
     handle: "@dengoso",
     tags: "Gaming • Fortnite",
     img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCoCsrdXb9txN_q0uKStnQ-6GL__7sd8eBHFGxv2a93P8izX9Y-lQeiLLlYiSN8ZYZ_8DJhYS1nZj4FpDDqbR_dyEqybIi_lH4UXZZEOCrOyTPD25oKO-02qZTzvVzGEdgSqS-l94MztfgMb8hZgs6UAC4J_2R7Jf1vzgYnJB4wP11D6_fniFwOBZEoq4FtB55odcGH0awewFzfXyNW2QFlMu02bUrpDZGIO6NIiSfow8bUcJ5U6gNihH9KS06IM6UI9H20oJJHNPI",
-    offset: 16,
+    offset: 0,
   },
   {
     name: "Kalera",
@@ -43,21 +43,21 @@ const creators = [
     handle: "@outrovina",
     tags: "Stand-up • K-pop",
     img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCfxtIh1exeNJgvWF0y-11d2dwwxP230vPqPTwSJ2ZTk21E5lesD0S79wiuvVmxdiYwfpbuc4n32YxJAbK1iDzsA_K6z-7bECFithLEuOIJshlRX-_OLc81_Ag-D3rdEFcFRDyuEVd4tOE6TXetx2eryeI1c2jRV5dBc3kw8_qCaoOsPRJRVYPR6MXb6LsVfyy5j4MYdIr0adYtGfwTM9nQ9Wh0HSKTltR2cjN7EmKGY2Xsx0w-EMHgeKTLWrJYex7E93yXBQg2vA0",
-    offset: 48,
+    offset: 0,
   },
   {
     name: "Vick",
     handle: "@vick.art",
     tags: "Artes Visuais",
     img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBPmUrSvJFEbqGPQrzjSZXNfQ4uy90P_h_Lb4Msf0Ll2VPl_SyTtNy2V3NLgz9ZSGpSKgWPLsLbLGgB4ZddzAYErqPm91U3A9ang4FXNjMedVsuNtRBUV0H0mFS_SS6m3NiiuwjzjBMG46l_xay_1l7zJ4QNo37HEvRJ-Q55vFnAuBVdjWdcWIHHl8jJnStrHTl11CG7A9sVSm7wImKKbA7xwWQ3nv13usjW30148wfYgBETOU3bpPFhXzZf9HxZ02rTYYp5IBX4iE",
-    offset: 8,
+    offset: 0,
   },
   {
     name: "Julia Campos",
     handle: "@juliampos",
     tags: "Games • Lives",
     img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDtdbu_MdiZbcaA6NxxyS4bLrmsB_Iygg8BObW4Ryg0WtQsfdEVKu_3z2xhmcLsqH3hxEdmw6xcG0UP2F5RDqgRL7XgXu4dD3A1KoXRfv8Tw4r3cgnHKqMUL_MrhMKXT-y8dhBHX-SrNO_NgNP5K_jQgMKQT1uI8D3WBVbmA138CoxLEamrNM0mOc5zOrqzfTusPzbm4y8QzCEv8dz-QGk9Mdaw3jVUDJvmRlx3mO9o1xr3NI2KC3eZySeMyifLddSaaGFBRpbd-1U",
-    offset: 24,
+    offset: 0,
   },
   {
     name: "Thatales",
@@ -71,7 +71,7 @@ const creators = [
     handle: "@eucamilamasri",
     tags: "Dublagem • Humor",
     img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCoCsrdXb9txN_q0uKStnQ-6GL__7sd8eBHFGxv2a93P8izX9Y-lQeiLLlYiSN8ZYZ_8DJhYS1nZj4FpDDqbR_dyEqybIi_lH4UXZZEOCrOyTPD25oKO-02qZTzvVzGEdgSqS-l94MztfgMb8hZgs6UAC4J_2R7Jf1vzgYnJB4wP11D6_fniFwOBZEoq4FtB55odcGH0awewFzfXyNW2QFlMu02bUrpDZGIO6NIiSfow8bUcJ5U6gNihH9KS06IM6UI9H20oJJHNPI",
-    offset: 40,
+    offset: 0,
   },
   {
     name: "Isa Faracco",
@@ -85,7 +85,7 @@ const creators = [
     handle: "@omurart",
     tags: "Música • Geek",
     img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCfxtIh1exeNJgvWF0y-11d2dwwxP230vPqPTwSJ2ZTk21E5lesD0S79wiuvVmxdiYwfpbuc4n32YxJAbK1iDzsA_K6z-7bECFithLEuOIJshlRX-_OLc81_Ag-D3rdEFcFRDyuEVd4tOE6TXetx2eryeI1c2jRV5dBc3kw8_qCaoOsPRJRVYPR6MXb6LsVfyy5j4MYdIr0adYtGfwTM9nQ9Wh0HSKTltR2cjN7EmKGY2Xsx0w-EMHgeKTLWrJYex7E93yXBQg2vA0",
-    offset: 20,
+    offset: 0,
   },
 ];
 

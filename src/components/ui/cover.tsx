@@ -13,32 +13,43 @@ export const Cover = ({
   className?: string;
 }) => {
   const [hovered, setHovered] = useState(false);
-
   const ref = useRef<HTMLDivElement>(null);
-
   const [containerWidth, setContainerWidth] = useState(0);
-  const [beamPositions, setBeamPositions] = useState<number[]>([]);
+
+  const [beams, setBeams] = useState<
+    {
+      top: number;
+      duration: number;
+      delay: number;
+      hoverDelay: number;
+      hoverRepeatDelay: number;
+    }[]
+  >([]);
 
   useEffect(() => {
     if (ref.current) {
-      setContainerWidth(ref.current?.clientWidth ?? 0);
+      setContainerWidth(ref.current.clientWidth ?? 0);
 
-      const height = ref.current?.clientHeight ?? 0;
-      const numberOfBeams = Math.floor(height / 10); // Adjust the divisor to control the spacing
-      const positions = Array.from(
-        { length: numberOfBeams },
-        (_, i) => (i + 1) * (height / (numberOfBeams + 1)),
-      );
-      setBeamPositions(positions);
+      const height = ref.current.clientHeight ?? 0;
+      const numberOfBeams = Math.floor(height / 10);
+
+      const generatedBeams = Array.from({ length: numberOfBeams }, (_, i) => ({
+        top: (i + 1) * (height / (numberOfBeams + 1)),
+        duration: Math.random() * 2 + 1,
+        delay: Math.random() * 2 + 1,
+        hoverDelay: Math.random() * (1 - 0.2) + 0.2,
+        hoverRepeatDelay: Math.random() * (2 - 1) + 1,
+      }));
+      setBeams(generatedBeams);
     }
-  }, [ref.current]);
+  }, []);
 
   return (
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       ref={ref}
-      className="relative hover:bg-neutral-900  group/cover inline-block dark:bg-neutral-900 bg-neutral-100 px-2 py-2  transition duration-200 rounded-sm"
+      className="relative hover:bg-neutral-900 group/cover inline-block dark:bg-neutral-900 bg-neutral-100 px-2 py-2 transition duration-200 rounded-sm"
     >
       <AnimatePresence>
         {hovered && (
@@ -86,18 +97,22 @@ export const Cover = ({
           </motion.div>
         )}
       </AnimatePresence>
-      {beamPositions.map((position, index) => (
+
+      {beams.map((beam, index) => (
         <Beam
           key={index}
           hovered={hovered}
-          duration={Math.random() * 2 + 1}
-          delay={Math.random() * 2 + 1}
+          duration={beam.duration}
+          delay={beam.delay}
+          hoverDelay={beam.hoverDelay} // Passando via prop
+          hoverRepeatDelay={beam.hoverRepeatDelay} // Passando via prop
           width={containerWidth}
           style={{
-            top: `${position}px`,
+            top: `${beam.top}px`,
           }}
         />
       ))}
+
       <motion.span
         key={String(hovered)}
         animate={{
@@ -151,6 +166,8 @@ export const Beam = ({
   duration,
   hovered,
   width = 600,
+  hoverDelay,
+  hoverRepeatDelay,
   ...svgProps
 }: {
   className?: string;
@@ -158,8 +175,12 @@ export const Beam = ({
   duration?: number;
   hovered?: boolean;
   width?: number;
+  hoverDelay?: number;
+  hoverRepeatDelay?: number;
 } & React.ComponentProps<typeof motion.svg>) => {
   const id = useId();
+
+  // ERRO 2 CORRIGIDO: O componente Beam agora é 100% puro. Sem states, sem effects!
 
   return (
     <motion.svg
@@ -197,8 +218,9 @@ export const Beam = ({
             duration: hovered ? 0.5 : (duration ?? 2),
             ease: "linear",
             repeat: Infinity,
-            delay: hovered ? Math.random() * (1 - 0.2) + 0.2 : 0,
-            repeatDelay: hovered ? Math.random() * (2 - 1) + 1 : (delay ?? 1),
+            // Valores sendo lidos diretamente das props agora
+            delay: hovered ? (hoverDelay ?? 0.5) : 0,
+            repeatDelay: hovered ? (hoverRepeatDelay ?? 1.5) : (delay ?? 1),
           }}
         >
           <stop stopColor="#2EB9DF" stopOpacity="0" />

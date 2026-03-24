@@ -36,8 +36,6 @@ export default function Navbar() {
           {/* Logo */}
           <a href="#" className="flex items-center gap-2.5 group">
             <div className="flex flex-col gap-[3px]">
-              {/* Logo */}
-
               <Image
                 src="/logo.svg" /* Nome exato do seu arquivo na pasta public */
                 alt="Spot Creators"

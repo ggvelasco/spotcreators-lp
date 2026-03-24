@@ -7,10 +7,12 @@ import Brands from "@/components/Brands";
 import Events from "@/components/Events";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import { ReactLenis, useLenis } from "lenis/react";
 
 export default function Home() {
   return (
     <main>
+      <ReactLenis root />
       <Navbar />
       <Hero />
       <DNA />

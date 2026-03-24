@@ -76,7 +76,9 @@ export default function Hero() {
             transition={{ duration: 0.9, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="block italic text-glow relative"
           >
-            <Cover>CREATORS</Cover>
+            <Cover>
+              <span className="pr-6">CREATORS</span>
+            </Cover>
             {/* Underline squiggle */}
             {/* <svg
               className="absolute -bottom-6 left-42 w-190 text-primary/30"

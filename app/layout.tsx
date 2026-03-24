@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Geist, Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
+import ClickSpark from "@/components/ClickSpark.jsx";
+import { ReactLenis, useLenis } from "lenis/react";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 const inter = Inter({
@@ -24,7 +26,17 @@ export default function RootLayout({
       lang="pt-BR"
       className={cn("dark", "font-sans", geist.variable, inter.variable)}
     >
-      <body className="noise-overlay">{children}</body>
+      <body className="noise-overlay">
+        <ClickSpark
+          sparkColor="#ffe135"
+          sparkSize={10}
+          sparkRadius={15}
+          sparkCount={8}
+          duration={400}
+        >
+          {children}
+        </ClickSpark>
+      </body>
     </html>
   );
 }

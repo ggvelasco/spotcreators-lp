@@ -13,7 +13,7 @@ const events = [
     name: "BGS & Gamescom",
     tag: "Gaming",
     img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCy5wjMUokun5P7DUpmTlOBFbL8PCoFQC7E7p_E3Hax47PjzaFIW7wYpRFdII99vY8abgd4CEvMYmyqyw3cnwmOAjpYes-drkjUV3ZQVhASx9ThUA0yvg39Q943jlTp5g-nWirrJkUCVD8YWjpDm6-GgtcNlKxKhukJi1ef3APwOAf3JN-aUJojiGNrhYU9-k0qFM86zaOXgbBbJFiZQIClnH7SP38V5d97Kkm6acM8qt6dZ5-bjBWkZpPH2iJxca5QZVTXne4d1Mo",
-    offset: 80,
+    offset: 0,
   },
   {
     name: "The Town & CCXP",
@@ -39,7 +39,7 @@ export default function Events() {
         >
           SPOT ON{" "}
           <span
-            className="italic"
+            className="italic px-3.5"
             style={{
               background: "linear-gradient(135deg, #ffe135, #ffd100)",
               WebkitBackgroundClip: "text",

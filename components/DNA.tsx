@@ -1,6 +1,13 @@
 "use client";
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { CardBody, CardContainer, CardItem } from "@/src/components/ui/3d-card";
+
+import Image from "next/image";
+import {
+  DraggableCardBody,
+  DraggableCardContainer,
+} from "@/src/components/ui/draggable-card";
 
 const stats = [
   { n: "500M+", l: "Impacto total" },
@@ -11,6 +18,50 @@ const stats = [
 export default function DNA() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
+  const items = [
+    {
+      title: "",
+      image: "/draggable-card-images/1.png",
+      className: "absolute top-10 left-[20%] rotate-[-5deg]",
+      key: "1",
+    },
+    {
+      title: "",
+      image: "/draggable-card-images/2.png",
+      className: "absolute top-40 left-[25%] rotate-[-7deg]",
+      key: "2",
+    },
+    {
+      title: "",
+      image: "/draggable-card-images/3.png",
+      className: "absolute top-5 left-[40%] rotate-[8deg]",
+      key: "3",
+    },
+    {
+      title: "",
+      image: "/draggable-card-images/4.png",
+      className: "absolute top-32 left-[55%] rotate-[10deg]",
+      key: "4",
+    },
+    {
+      title: "",
+      image: "/draggable-card-images/5.png",
+      className: "absolute top-20 right-[35%] rotate-[2deg]",
+      key: "5",
+    },
+    {
+      title: "",
+      image: "/draggable-card-images/6.png",
+      className: "absolute top-24 left-[45%] rotate-[-7deg]",
+      key: "6",
+    },
+    {
+      title: "",
+      image: "/draggable-card-images/7.png",
+      className: "absolute top-8 left-[30%] rotate-[4deg]",
+      key: "7",
+    },
+  ];
 
   return (
     <section
@@ -19,7 +70,7 @@ export default function DNA() {
       className="py-40 px-6 md:px-20 relative overflow-hidden"
     >
       {/* BG accent */}
-      <div className="absolute -top-40 -left-40 w-[500px] h-[500px] bg-primary/[0.04] rounded-full blur-[100px]" />
+      {/* <div className="absolute -top-40 -left-40 w-125 h-125 bg-primary/40 rounded-full blur-[100px]" /> */}
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
         {/* Left: Text */}
@@ -42,7 +93,7 @@ export default function DNA() {
           >
             MUITO <br />
             <span
-              className="italic"
+              className="italic px-5 leading-[1.2]"
               style={{
                 background: "linear-gradient(135deg, #ffe135, #ffd100)",
                 WebkitBackgroundClip: "text",
@@ -97,33 +148,30 @@ export default function DNA() {
 
         {/* Right: Image card */}
         <motion.div
-          initial={{ opacity: 0, x: 60, rotate: 4 }}
-          animate={inView ? { opacity: 1, x: 0, rotate: 2 } : {}}
+          initial={{ opacity: 0, x: 60 }}
+          animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          whileHover={{ rotate: 0 }}
           className="relative"
         >
-          <div className="relative aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-[0_60px_120px_-20px_rgba(0,0,0,0.7)] bg-surface-highest">
-            <img
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtHyt4xVPlvQ-5Ya1gDgdU6fzde10geRDLh4RT-l8CmGCq2cQHOKCd72Jmhl4JpWRCWxMhS9Kj17KyWi7-NqmpPxqCzqvp9OT8hhyR4hm3ErxYoZxdwhsdaws54sRRKEwYXJSe6_Zwnpq66GQ7ZE9H18fEltCI1_Y8cx-Oem8KkHARyB2qKug6jPnUgXZC6CCLUU6h7zz7LpbTZPt8X9iJA9GvdQEtxdlsIS4M_78ztagx0DYm7lc-nyOqf1vGeIR16PDoEhUPw7c"
-              alt="Spot Creators team"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-            {/* Quote card */}
-            <div className="absolute bottom-8 left-8 right-8 glass-card p-6 rounded-2xl">
-              <p className="text-white font-headline font-bold italic text-sm leading-relaxed">
-                "Criando o futuro da economia criativa no Brasil."
-              </p>
-            </div>
-          </div>
-
-          {/* Decorative elements */}
-          <div className="absolute -top-8 -right-8 w-32 h-32 border-[6px] border-primary/15 rounded-full" />
-          <div className="absolute -bottom-8 -left-8 w-20 h-20 bg-primary/10 rounded-2xl blur-lg" />
-          <div className="absolute top-16 -right-5 sticker bg-primary text-on-primary px-4 py-2 rounded-lg rotate-12 text-xs shadow-xl shadow-primary/30 z-10">
-            AUTHENTIC ONLY
-          </div>
+          <DraggableCardContainer className="relative flex min-h-screen w-full items-center justify-center ">
+            <p className="absolute top-1/2 mx-auto max-w-sm -translate-y-3/4 text-center text-2xl font-black text-neutral-400 md:text-4xl dark:text-neutral-800">
+              Vamos criar o próximo hit da internet juntos?
+            </p>
+            {items.map((item) => (
+              <DraggableCardBody key={item.key} className={item.className}>
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  width={320}
+                  height={320}
+                  className="pointer-events-none relative z-10 h-80 w-80 object-cover"
+                />
+                <h3 className="mt-4 text-center text-2xl font-bold text-neutral-700 dark:text-neutral-300">
+                  {item.title}
+                </h3>
+              </DraggableCardBody>
+            ))}
+          </DraggableCardContainer>
         </motion.div>
       </div>
     </section>
