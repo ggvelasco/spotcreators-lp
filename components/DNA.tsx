@@ -158,7 +158,11 @@ export default function DNA() {
               Vamos criar o próximo hit da internet juntos?
             </p>
             {items.map((item) => (
-              <DraggableCardBody key={item.key} className={item.className}>
+              <DraggableCardBody
+                key={item.key}
+                className={item.className}
+                constraintsRef={ref}
+              >
                 <Image
                   src={item.image}
                   alt={item.title}

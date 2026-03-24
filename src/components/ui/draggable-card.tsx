@@ -14,20 +14,16 @@ import {
 export const DraggableCardBody = ({
   className,
   children,
+  constraintsRef,
 }: {
   className?: string;
   children?: React.ReactNode;
+  constraintsRef?: React.RefObject<HTMLElement | null>;
 }) => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const cardRef = useRef<HTMLDivElement>(null);
   const controls = useAnimationControls();
-  const [constraints, setConstraints] = useState({
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  });
 
   // physics biatch
   const velocityX = useVelocity(mouseX);
@@ -58,34 +54,6 @@ export const DraggableCardBody = ({
     springConfig,
   );
 
-  useEffect(() => {
-    // Update constraints when component mounts or window resizes
-    const updateConstraints = () => {
-      // Adicionamos a verificação do cardRef.current aqui
-      if (typeof window !== "undefined" && cardRef.current) {
-        // Pega as medidas exatas do card no momento em que ele carrega
-        const rect = cardRef.current.getBoundingClientRect();
-
-        setConstraints({
-          top: -rect.top, // Bate EXATAMENTE no teto da tela
-          bottom: window.innerHeight - rect.bottom, // Bate EXATAMENTE no chão da tela
-          left: -rect.left,
-          right: window.innerWidth - rect.right,
-        });
-      }
-    };
-
-    updateConstraints();
-
-    // Add resize listener
-    window.addEventListener("resize", updateConstraints);
-
-    // Clean up
-    return () => {
-      window.removeEventListener("resize", updateConstraints);
-    };
-  }, []);
-
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const { clientX, clientY } = e;
     const { width, height, left, top } =
@@ -112,7 +80,7 @@ export const DraggableCardBody = ({
     <motion.div
       ref={cardRef}
       drag
-      dragConstraints={constraints}
+      dragConstraints={constraintsRef}
       onDragStart={() => {
         document.body.style.cursor = "grabbing";
       }}
