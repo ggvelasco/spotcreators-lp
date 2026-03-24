@@ -3,7 +3,7 @@ import "./globals.css";
 import { Geist, Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import ClickSpark from "@/components/ClickSpark.jsx";
-import { ReactLenis, useLenis } from "lenis/react";
+import { Analytics } from "@vercel/analytics/next";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 const inter = Inter({
@@ -27,6 +27,7 @@ export default function RootLayout({
       className={cn("dark", "font-sans", geist.variable, inter.variable)}
     >
       <body className="noise-overlay">
+        <Analytics />
         <ClickSpark
           sparkColor="#ffe135"
           sparkSize={10}
