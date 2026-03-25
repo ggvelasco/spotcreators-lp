@@ -2,6 +2,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Cover } from "@/src/components/ui/cover";
+import MagicRings from "@/src/components/ui/MagicRings";
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -11,7 +12,6 @@ export default function Hero() {
   });
 
   const yTitle = useTransform(scrollYProgress, [0, 1], [0, -120]);
-  const yBg = useTransform(scrollYProgress, [0, 1], [0, 200]);
   const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
   return (
@@ -19,27 +19,34 @@ export default function Hero() {
       ref={ref}
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
     >
-      {/* Parallax BG blobs */}
-      <motion.div
-        style={{ y: yBg }}
-        className="absolute inset-0 z-0 pointer-events-none"
-      >
-        <div className="absolute top-[-30%] right-[-15%] w-[800px] h-[800px] rounded-full bg-primary opacity-[0.07] blur-[120px] animate-pulse-slow" />
-        <div
-          className="absolute bottom-[5%] left-[-10%] w-[600px] h-[600px] rounded-full bg-primary opacity-[0.05] blur-[100px] animate-pulse-slow"
-          style={{ animationDelay: "3s" }}
+      {/* 1. BACKGROUND LAYER: Magic Rings isolado aqui no fundo */}
+      <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
+        <MagicRings
+          color="#ffe135" // Puxando o amarelo Spot Creators
+          colorTwo="#ffd100" // O segundo tom do gradiente
+          ringCount={6}
+          speed={1}
+          attenuation={10}
+          lineThickness={2}
+          baseRadius={0.5}
+          radiusStep={0.1}
+          scaleRate={0.1}
+          opacity={1}
+          blur={0}
+          noiseAmount={0.1}
+          rotation={0}
+          ringGap={1.5}
+          fadeIn={0.7}
+          fadeOut={0.5}
+          followMouse={false}
+          mouseInfluence={0.2}
+          hoverScale={1.2}
+          parallax={0.1}
+          clickBurst={false}
         />
-        {/* Grid lines */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
-            backgroundSize: "80px 80px",
-          }}
-        />
-      </motion.div>
+      </div>
 
+      {/* 2. CONTENT LAYER: z-10 garante que o texto e botões fiquem acima dos anéis */}
       <motion.div
         style={{ y: yTitle, opacity }}
         className="relative z-10 text-center max-w-7xl px-6 pt-24"
@@ -65,11 +72,11 @@ export default function Hero() {
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className="font-headline font-black leading-[0.82] tracking-tighter mb-8"
-          style={{ fontSize: "clamp(4rem, 8vw, 14rem)" }}
+          className="font-headline font-black leading-[0.85] tracking-tighter mb-12"
+          style={{ fontSize: "clamp(4rem, 6.5vw, 14rem)" }}
         >
-          <span className="block text-white opacity-90">ACELERADORA</span>
-          <span className="block text-white">DE</span>
+          <span className="block text-white">ACELERADORA</span>
+          <span className="block text-white ">DE</span>
           <motion.span
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
@@ -79,22 +86,6 @@ export default function Hero() {
             <Cover>
               <span className="pr-6">CREATORS</span>
             </Cover>
-            {/* Underline squiggle */}
-            {/* <svg
-              className="absolute -bottom-6 left-42 w-190 text-primary/30"
-              viewBox="0 0 600 20"
-              preserveAspectRatio="none"
-              fill="none"
-            >
-              <motion.path
-                d="M0,10 Q75,2 150,10 T300,10 T450,10 T600,10"
-                stroke="currentColor"
-                strokeWidth="3"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ duration: 1.2, delay: 1, ease: "easeOut" }}
-              />
-            </svg> */}
           </motion.span>
         </motion.h1>
 
@@ -103,7 +94,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="font-body text-lg md:text-2xl text-on-surface-variant max-w-xl mx-auto mb-14 leading-relaxed"
+          className="font-body text-lg md:text-xl text-on-surface-variant max-w-xl mx-auto mb-24 leading-relaxed"
         >
           Conectamos creators e marcas criativamente com estratégias que rompem
           o algoritmo.
