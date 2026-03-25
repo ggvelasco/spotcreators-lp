@@ -12,7 +12,7 @@ import { ReactLenis, useLenis } from "lenis/react";
 export default function Home() {
   return (
     <main>
-      <ReactLenis root />
+      {/* <ReactLenis root /> */}
       <Navbar />
       <Hero />
       <DNA />
