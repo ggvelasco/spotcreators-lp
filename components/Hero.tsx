@@ -90,9 +90,7 @@ export default function Hero() {
             transition={{ duration: 0.9, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="block italic text-glow relative"
           >
-            <Cover>
-              <span className="pr-6">CREATORS</span>
-            </Cover>
+            <span className="pr-6">CREATORS</span>
           </motion.span>
         </motion.h1>
 
