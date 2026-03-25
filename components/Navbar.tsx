@@ -28,7 +28,8 @@ export default function Navbar() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className={`fixed top-0 w-full z-50 transition-all duration-500 ${
+        // FIX: Trocamos w-full por left-0 right-0 max-w-[100vw] para travar a largura
+        className={`fixed top-0 left-0 right-0 z-50 max-w-[100vw] transition-all duration-500 ${
           scrolled ? "glass-nav py-3" : "bg-transparent py-5"
         }`}
       >
@@ -37,11 +38,11 @@ export default function Navbar() {
           <a href="#" className="flex items-center gap-2.5 group">
             <div className="flex flex-col gap-[3px]">
               <Image
-                src="/logo.svg" /* Nome exato do seu arquivo na pasta public */
+                src="/logo.svg"
                 alt="Spot Creators"
-                width={160} /* Ajuste a largura do seu logo aqui */
-                height={40} /* Ajuste a altura do seu logo aqui */
-                priority /* Garante que o logo carregue imediatamente */
+                width={160}
+                height={40}
+                priority
                 className="w-auto h-[30px] md:h-[40px] group-hover:opacity-80 transition-opacity duration-300"
               />
             </div>
@@ -107,37 +108,41 @@ export default function Navbar() {
       {/* Mobile Menu */}
       <AnimatePresence>
         {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed inset-0 z-40 bg-surface flex flex-col items-center justify-center gap-8"
-          >
-            {links.map((link, i) => (
+          // FIX: A caixa invisível que prende o menu e corta o excesso de animação lateral
+          <div className="fixed inset-0 z-40 overflow-hidden pointer-events-none">
+            <motion.div
+              initial={{ opacity: 0, x: "100%" }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              // FIX: Volta os cliques com pointer-events-auto e usa absolute no lugar de fixed
+              className="absolute inset-0 bg-surface flex flex-col items-center justify-center gap-8 pointer-events-auto"
+            >
+              {links.map((link, i) => (
+                <motion.a
+                  key={link.href}
+                  href={link.href}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.07 }}
+                  onClick={() => setMenuOpen(false)}
+                  className="font-headline font-black text-4xl text-white hover:text-primary transition-colors"
+                >
+                  {link.label}
+                </motion.a>
+              ))}
               <motion.a
-                key={link.href}
-                href={link.href}
+                href="#contato"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.07 }}
+                transition={{ delay: 0.4 }}
                 onClick={() => setMenuOpen(false)}
-                className="font-headline font-black text-4xl text-white hover:text-primary transition-colors"
+                className="kinetic-gradient text-on-primary font-headline font-extrabold px-10 py-4 rounded-full text-sm uppercase tracking-widest mt-4"
               >
-                {link.label}
+                Bora falar?
               </motion.a>
-            ))}
-            <motion.a
-              href="#contato"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              onClick={() => setMenuOpen(false)}
-              className="kinetic-gradient text-on-primary font-headline font-extrabold px-10 py-4 rounded-full text-sm uppercase tracking-widest mt-4"
-            >
-              Bora falar?
-            </motion.a>
-          </motion.div>
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </>

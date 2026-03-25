@@ -296,3 +296,7 @@
   --outline: #767575;
   --outline-variant: #484847;
 }
+
+/* * {
+  outline: 1px solid red !important;
+} */

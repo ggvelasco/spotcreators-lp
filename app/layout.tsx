@@ -26,7 +26,7 @@ export default function RootLayout({
       lang="pt-BR"
       className={cn("dark", "font-sans", geist.variable, inter.variable)}
     >
-      <body className="noise-overlay">
+      <body className="noise-overlay overflow-x-hidden relative">
         <Analytics />
         <ClickSpark
           sparkColor="#ffe135"

@@ -26,7 +26,6 @@ export default function Contact() {
   return (
     <section ref={ref} id="contato" className="py-40 px-6 relative">
       {/* BG blob */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/[0.05] rounded-full blur-[120px] -translate-y-1/3 translate-x-1/3 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto">
         <div className="glass-card rounded-[3rem] p-10 md:p-20 relative overflow-hidden">
