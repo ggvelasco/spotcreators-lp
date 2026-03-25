@@ -80,7 +80,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
           className="font-headline font-black leading-[0.85] tracking-tighter mb-12"
-          style={{ fontSize: "clamp(4rem, 6.5vw, 14rem)" }}
+          style={{ fontSize: "clamp(3rem, 6.5vw, 14rem)" }}
         >
           <span className="block text-white">ACELERADORA</span>
           <span className="block text-white ">DE</span>
@@ -90,9 +90,17 @@ export default function Hero() {
             transition={{ duration: 0.9, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="block italic text-glow relative"
           >
-            <Cover>
-              <span className="pr-6">CREATORS</span>
-            </Cover>
+            {/* 1. VERSÃO MOBILE: Apenas o texto puro. 
+                A classe 'md:hidden' faz ele sumir em telas de tablet/PC */}
+            <span className="pr-6 md:hidden">CREATORS</span>
+
+            {/* 2. VERSÃO DESKTOP: O componente Cover pesadão.
+                A classe 'hidden md:inline-block' faz ele nascer invisível e só aparecer em telas grandes */}
+            <span className="hidden md:inline-block">
+              <Cover>
+                <span className="pr-6">CREATORS</span>
+              </Cover>
+            </span>
           </motion.span>
         </motion.h1>
 
