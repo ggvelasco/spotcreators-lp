@@ -1,8 +1,11 @@
 "use client";
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import ChromaGrid from "./ChromaGrid";
-import { LampContainer } from "@/src/components/ui/lamp";
+import dynamic from "next/dynamic";
+
+const ChromaGrid = dynamic(() => import("./ChromaGrid"), {
+  ssr: false,
+});
 
 const creators = [
   {

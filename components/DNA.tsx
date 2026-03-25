@@ -1,13 +1,26 @@
 "use client";
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { CardBody, CardContainer, CardItem } from "@/src/components/ui/3d-card";
-
+import dynamic from "next/dynamic";
 import Image from "next/image";
-import {
-  DraggableCardBody,
-  DraggableCardContainer,
-} from "@/src/components/ui/draggable-card";
+
+// Importando o Container dinamicamente
+export const DraggableCardContainer = dynamic(
+  () =>
+    import("@/src/components/ui/draggable-card").then(
+      (mod) => mod.DraggableCardContainer,
+    ),
+  { ssr: false },
+);
+
+// Importando o Body dinamicamente
+export const DraggableCardBody = dynamic(
+  () =>
+    import("@/src/components/ui/draggable-card").then(
+      (mod) => mod.DraggableCardBody,
+    ),
+  { ssr: false },
+);
 
 const stats = [
   { n: "500M+", l: "Impacto total" },

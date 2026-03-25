@@ -1,8 +1,15 @@
 "use client";
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Cover } from "@/src/components/ui/cover";
-import MagicRings from "@/src/components/ui/MagicRings";
+import dynamic from "next/dynamic";
+
+const Cover = dynamic(
+  () => import("@/src/components/ui/cover").then((mod) => mod.Cover),
+  { ssr: false },
+);
+const MagicRings = dynamic(() => import("@/src/components/ui/MagicRings"), {
+  ssr: false, // Isso é vital! Evita que o servidor tente calcular o Canvas, deixando só pro navegador fazer isso depois que a tela já carregou.
+});
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
