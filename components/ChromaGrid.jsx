@@ -9,6 +9,7 @@ export const ChromaGrid = ({
   damping = 0.45,
   fadeOut = 0.6,
   ease = "power3.out",
+  onItemClick,
 }) => {
   const rootRef = useRef(null);
   const fadeRef = useRef(null);
@@ -83,7 +84,9 @@ export const ChromaGrid = ({
     });
   };
 
-  const handleCardClick = (url) => {
+  const handleCardClick = (item, index) => {
+    onItemClick?.(item, index);
+    const { url } = item;
     if (url && url !== "#") {
       // Adicionei isso pra não abrir janela nova vazia
       window.open(url, "_blank", "noopener,noreferrer");
@@ -119,7 +122,7 @@ export const ChromaGrid = ({
           // 5. Removi aquelas classes erradas daqui de dentro!
           className="chroma-card w-full"
           onMouseMove={handleCardMove}
-          onClick={() => handleCardClick(c.url)}
+          onClick={() => handleCardClick(c, i)}
           style={{
             "--card-border": c.borderColor || "transparent",
             "--card-gradient": c.gradient,
@@ -131,7 +134,7 @@ export const ChromaGrid = ({
               src={c.image}
               alt={c.title}
               loading="lazy"
-              className=" w-full h-full aspect-[3/4] object-cover"
+              className=" w-full h-full aspect-3/4 object-cover"
             />
           </div>
           <footer className="chroma-info">

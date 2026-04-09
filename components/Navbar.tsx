@@ -22,13 +22,22 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Trava o scroll horizontal (e vertical) quando o menu mobile está aberto
+  useEffect(() => {
+    document.body.style.overflowX = menuOpen ? "hidden" : "";
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflowX = "";
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
   return (
     <>
       <motion.header
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        // FIX: Trocamos w-full por left-0 right-0 max-w-[100vw] para travar a largura
         className={`fixed top-0 left-0 right-0 z-50 max-w-[100vw] transition-all duration-500 ${
           scrolled ? "glass-nav py-3" : "bg-transparent py-5"
         }`}
@@ -86,6 +95,7 @@ export default function Navbar() {
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="md:hidden flex flex-col gap-1.5 p-2"
+            aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
           >
             <motion.span
               animate={menuOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
@@ -108,14 +118,16 @@ export default function Navbar() {
       {/* Mobile Menu */}
       <AnimatePresence>
         {menuOpen && (
-          // FIX: A caixa invisível que prende o menu e corta o excesso de animação lateral
-          <div className="fixed inset-0 z-40 overflow-hidden pointer-events-none">
+          // Wrapper com overflow hidden inline para garantir corte do slide
+          <div
+            className="fixed inset-0 z-40 pointer-events-none"
+            style={{ overflow: "hidden" }}
+          >
             <motion.div
-              initial={{ opacity: 0, x: "100%" }}
+              initial={{ opacity: 0, x: "100vw" }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: "100%" }}
+              exit={{ opacity: 0, x: "100vw" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              // FIX: Volta os cliques com pointer-events-auto e usa absolute no lugar de fixed
               className="absolute inset-0 bg-surface flex flex-col items-center justify-center gap-8 pointer-events-auto"
             >
               {links.map((link, i) => (

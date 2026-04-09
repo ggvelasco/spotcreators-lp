@@ -28,8 +28,8 @@ export default function Contact() {
       {/* BG blob */}
 
       <div className="max-w-7xl mx-auto">
-        <div className="glass-card rounded-[3rem] p-10 md:p-20 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/[0.06] blur-[80px] rounded-full -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+        <div className="glass-card rounded-[3rem] p-10 md:p-20 relative overflow-visible">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/6 blur-[80px] rounded-full -translate-y-1/2 translate-x-1/3 pointer-events-none" />
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center relative z-10">
             {/* Left */}
@@ -46,19 +46,37 @@ export default function Contact() {
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
                 className="font-headline font-black tracking-tighter leading-[0.85] mb-14"
-                style={{ fontSize: "clamp(2.5rem, 5vw, 5.5rem)" }}
+                style={{
+                  fontSize: "clamp(2.5rem, 5vw, 5.5rem)",
+                  overflow: "visible",
+                }}
               >
                 VAMOS CRIAR O{" "}
                 <span
-                  className="italic"
+                  className="italic inline-block"
                   style={{
                     background: "linear-gradient(135deg, #ffe135, #ffd100)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",
+                    padding: "0 0.20em", // Protege o "O"
+                    margin: "0 -0.20em",
                   }}
                 >
-                  PRÓXIMO HIT
+                  PRÓXIMO
+                </span>{" "}
+                <span
+                  className="italic inline-block"
+                  style={{
+                    background: "linear-gradient(135deg, #ffe135, #ffd100)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                    padding: "0 0.20em",
+                    margin: "0 -0.20em",
+                  }}
+                >
+                  HIT
                 </span>{" "}
                 JUNTOS?
               </motion.h2>
@@ -75,9 +93,9 @@ export default function Contact() {
                 ].map((item) => (
                   <div
                     key={item.text}
-                    className="flex items-center gap-5 group"
+                    className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 group"
                   >
-                    <div className="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center text-xl group-hover:bg-primary group-hover:border-primary transition-all duration-300">
+                    <div className="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center text-xl shrink-0 group-hover:bg-primary group-hover:border-primary transition-all duration-300">
                       {item.icon}
                     </div>
                     <span className="font-headline font-bold text-lg text-white/80 group-hover:text-white transition-colors">
