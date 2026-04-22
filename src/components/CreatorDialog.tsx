@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Creator } from "@/src/types/creator";
+import { Creator } from "@/types/creator";
 
 // ─── Ícones inline ────────────────────────────────────────────────────────
 const IconInstagram = () => (
@@ -174,7 +174,7 @@ export default function CreatorDialog({
         >
           {/* Dialog — style único, sem duplicata */}
           <motion.div
-            className="relative w-full max-w-3xl max-h-[92vh] sm:max-h-[90vh] overflow-y-auto overflow-x-hidden rounded-t-2xl sm:rounded-2xl"
+            className="relative w-full max-w-3xl max-h-[92vh] sm:max-h-[90vh] overflow-y-auto overflow-x-hidden rounded-t-2xl sm:rounded-2xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 40 }}

@@ -4,7 +4,7 @@ import { motion, useInView } from "framer-motion";
 
 const events = [
   {
-    name: "Lollapalooza",
+    name: "The Town & Lollapalooza",
     tag: "Festival",
     img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAy4fI9rT2H33r4PdSDjEOwJWgpdh8uA49ZsNIO5dhSMoWLFfWZDWQ2b8GKjm5Jf5FAnWwnsIUeHBimjPregcAOy6GVeQcCQSMOKfLv720NXRdbFtitdKJ9PZ-69lSNufmgXwwUArGJOp5TViIQxII0rArYHdprQHwuU8XeMxukSg5WIzKvjf4X0gblFfQNSoQFXKKr0rPN3XPtLk_AHjIEwvht5_jPxAGABT9v-l0Tl1pQxmGbFXAdEvEUZgNDPYQO6YFh1stqkXw",
     offset: 0,
@@ -16,7 +16,7 @@ const events = [
     offset: 0,
   },
   {
-    name: "The Town & CCXP",
+    name: "CCXP",
     tag: "Cultura",
     img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBl1gJ8nW8lk13taQE00ZzQFbzOFsyrkqyUnde5PyV1A1wsJcoJivqvwTmotL0wHJ61dSJrcXxhp1-TrxjDr3tT2ULQQ2y1mf0AT43UvJ6y07ovU1w91HhUBcSao28ZTlzliie-lxO89yk_AlHiUCE4W799b9N-1Ns5hGVZNztVFfzabqyrnyf3d3VlHU8x-yfXE89mV53Vz5pEr-SWPjUUrBwBT3WVJJ63I5GaNwurKLmFs_v_qEcEol02Vet8JL9eqCNDYyyxd3s",
     offset: 0,
