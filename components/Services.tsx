@@ -25,9 +25,8 @@ const services = [
     icon: "🎬",
     title: "PRODUÇÃO\nCRIATIVA",
     desc: "Estudo profundo do criador para entregas autênticas e auxílio técnico de alto nível na execução de jobs.",
-    span: 2,
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuC4E3pp97TDWPDEvUqWqdo-dqV1c02JAxNKnaf-oMOCxHwPP4HQDwef4rWl624SEa3l631xP2a9wlFwTR87m8NFfzh8T3DcJbjJ8b3U3w64Z2vLbF7B1bLU7es8kq2h33VaB_0SLdyA3bL4iW9TNVgoBw32B4H9mail_T_H6WR5qo_sbBIvKcMz3GgOORYefUguXQk40zVBykrQEZuSz2oQu7kupzc9HFUqLlUPWhzx5EC3-iLyuc8Q0atBDNnUeC0JcQeZdk0p6k",
+    span: 1,
+    image: "",
   },
   {
     icon: "📊",

@@ -140,7 +140,7 @@ export default function DNA() {
           </motion.div>
 
           {/* Stats */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.5 }}
@@ -156,7 +156,7 @@ export default function DNA() {
                 </div>
               </div>
             ))}
-          </motion.div>
+          </motion.div> */}
         </div>
 
         {/* Right: Image card */}

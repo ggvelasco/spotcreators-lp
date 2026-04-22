@@ -153,7 +153,7 @@ export default function Hero() {
         </motion.div>
 
         {/* Stats strip */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.3 }}
@@ -173,7 +173,7 @@ export default function Hero() {
               </div>
             </div>
           ))}
-        </motion.div>
+        </motion.div> */}
       </motion.div>
     </section>
   );
