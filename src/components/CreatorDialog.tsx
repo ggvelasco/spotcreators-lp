@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Creator } from "@/types/creator";
+import type { Creator } from "@/src/types/creator";
 
 // ─── Ícones inline ────────────────────────────────────────────────────────
 const IconInstagram = () => (
@@ -78,7 +78,7 @@ function SocialCard({
 }) {
   return (
     <div
-      className="flex flex-col gap-1.5 p-4 rounded-xl border border-white/[0.06] bg-white/[0.03] hover:border-white/[0.12] transition-colors"
+      className="flex flex-col gap-1.5 p-4 rounded-xl border border-white/6 bg-white/3 hover:border-white/12 transition-colors"
       style={{ "--accent": color } as React.CSSProperties}
     >
       <div className="flex items-center gap-2" style={{ color }}>
@@ -109,7 +109,7 @@ function AudienceBar({
       <span className="text-xs text-white/40 w-12 shrink-0 font-mono">
         {range}
       </span>
-      <div className="flex-1 h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
+      <div className="flex-1 h-1.5 bg-white/6 rounded-full overflow-hidden">
         <motion.div
           className="h-full rounded-full"
           style={{ background: "linear-gradient(90deg, #ffd100, #ffaa00)" }}
@@ -191,7 +191,7 @@ export default function CreatorDialog({
             <div className="relative">
               {/* Faixa dourada superior */}
               <div
-                className="absolute top-0 left-0 right-0 h-[2px]"
+                className="absolute top-0 left-0 right-0 h-0.5"
                 style={{
                   background:
                     "linear-gradient(90deg, transparent, #ffd100, transparent)",
@@ -260,7 +260,7 @@ export default function CreatorDialog({
 
                     {/* Tags */}
                     <div className="flex flex-wrap gap-1.5 mt-3">
-                      {creator.topics.map((topic) => (
+                          {creator.topics.map((topic: string) => (
                         <span
                           key={topic}
                           className="text-[10px] font-bold uppercase tracking-[0.15em] px-2.5 py-1 rounded-full"
@@ -285,7 +285,7 @@ export default function CreatorDialog({
                 </p>
               </div>
 
-              <div className="mx-5 sm:mx-8 mt-6 h-px bg-white/[0.06]" />
+              <div className="mx-5 sm:mx-8 mt-6 h-px bg-white/6" />
             </div>
 
             {/* ── Corpo ────────────────────────────────────────────── */}
@@ -342,14 +342,14 @@ export default function CreatorDialog({
                   Faixa Etária da Audiência
                 </h3>
                 <div className="space-y-3">
-                  {creator.audience.map((item) => (
+                  {creator.audience.map((item: Creator["audience"][number]) => (
                     <AudienceBar key={item.range} {...item} />
                   ))}
                 </div>
               </div>
 
               {/* CTA */}
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2 border-t border-white/[0.06]">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2 border-t border-white/6">
                 <a
                   href="#contato"
                   onClick={onClose}
