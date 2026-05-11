@@ -1,5 +1,5 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import dynamic from "next/dynamic";
 
@@ -7,12 +7,11 @@ const Cover = dynamic(
   () => import("@/src/components/ui/cover").then((mod) => mod.Cover),
   { ssr: false },
 );
-const MagicRings = dynamic(() => import("@/src/components/ui/MagicRings"), {
-  ssr: false, // Isso é vital! Evita que o servidor tente calcular o Canvas, deixando só pro navegador fazer isso depois que a tela já carregou.
-});
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
@@ -21,39 +20,58 @@ export default function Hero() {
   const yTitle = useTransform(scrollYProgress, [0, 1], [0, -120]);
   const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
+  // ── Lazy load do vídeo após window.load ───────────────────────────────
+  // O vídeo não tem src no HTML — só é setado depois que a página toda
+  // terminou de carregar. Até lá, o poster (primeiro frame) é exibido.
+  useEffect(() => {
+    const loadVideo = () => {
+      const video = videoRef.current;
+      if (!video) return;
+      video.src = "/hero-bg.mp4"; // coloque seu vídeo em /public/hero-bg.mp4
+      video.load();
+      video.play().catch(() => {
+        // Autoplay bloqueado em alguns browsers — silencia o erro
+      });
+    };
+
+    if (document.readyState === "complete") {
+      loadVideo();
+    } else {
+      window.addEventListener("load", loadVideo, { once: true });
+    }
+
+    return () => {
+      window.removeEventListener("load", loadVideo);
+    };
+  }, []);
+
   return (
     <section
       ref={ref}
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
     >
-      {/* 1. BACKGROUND LAYER: Magic Rings isolado aqui no fundo */}
-      <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none">
-        <MagicRings
-          color="#ffe135" // Puxando o amarelo Spot Creators
-          colorTwo="#ffd100" // O segundo tom do gradiente
-          ringCount={6}
-          speed={1}
-          attenuation={10}
-          lineThickness={2}
-          baseRadius={0.5}
-          radiusStep={0.1}
-          scaleRate={0.1}
-          opacity={1}
-          blur={0}
-          noiseAmount={0.1}
-          rotation={0}
-          ringGap={1.5}
-          fadeIn={0.7}
-          fadeOut={0.5}
-          followMouse={false}
-          mouseInfluence={0.2}
-          hoverScale={1.2}
-          parallax={0.1}
-          clickBurst={false}
+      {/* ── 1. VIDEO BACKGROUND ─────────────────────────────────────────── */}
+      <div className="absolute inset-0 z-0">
+        {/* Vídeo — sem src intencional, setado pelo useEffect após window.load */}
+        <video
+          ref={videoRef}
+          poster="/hero-poster.webp" // primeiro frame exportado do vídeo
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="none"
+          className="absolute inset-0 w-full h-full object-cover"
         />
+
+        {/* Overlay escuro para garantir legibilidade do texto */}
+        <div className="absolute inset-0 bg-black/60" />
+
+        {/* Gradiente nas bordas para fundir com o resto do site */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80" />
       </div>
 
-      {/* 2. CONTENT LAYER: z-10 garante que o texto e botões fiquem acima dos anéis */}
+      {/* ── 2. CONTENT LAYER ────────────────────────────────────────────── */}
       <motion.div
         style={{ y: yTitle, opacity }}
         className="relative z-10 text-center max-w-7xl px-6 pt-24"
@@ -83,19 +101,17 @@ export default function Hero() {
           style={{ fontSize: "clamp(3rem, 6.5vw, 14rem)" }}
         >
           <span className="block text-white">ACELERADORA</span>
-          <span className="block text-white ">DE</span>
+          <span className="block text-white">DE</span>
           <motion.span
             initial={{ opacity: 0, x: -40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.9, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="block italic text-glow relative"
           >
-            {/* 1. VERSÃO MOBILE: Apenas o texto puro. 
-                A classe 'md:hidden' faz ele sumir em telas de tablet/PC */}
+            {/* Mobile: texto puro */}
             <span className="pr-6 md:hidden">CREATORS</span>
 
-            {/* 2. VERSÃO DESKTOP: O componente Cover pesadão.
-                A classe 'hidden md:inline-block' faz ele nascer invisível e só aparecer em telas grandes */}
+            {/* Desktop: componente Cover */}
             <span className="hidden md:inline-block">
               <Cover>
                 <span className="pr-6">CREATORS</span>
@@ -151,29 +167,6 @@ export default function Hero() {
             Conhecer o Casting
           </motion.a>
         </motion.div>
-
-        {/* Stats strip */}
-        {/* <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.3 }}
-          className="flex justify-center gap-16 mt-24 pt-12 border-t border-white/[0.06]"
-        >
-          {[
-            { n: "500M+", l: "de impacto" },
-            { n: "50+", l: "creators" },
-            { n: "100+", l: "marcas" },
-          ].map((s) => (
-            <div key={s.l} className="text-center">
-              <div className="font-headline font-black text-3xl md:text-4xl text-white">
-                {s.n}
-              </div>
-              <div className="font-label text-[10px] text-primary font-bold uppercase tracking-[0.25em] mt-1">
-                {s.l}
-              </div>
-            </div>
-          ))}
-        </motion.div> */}
       </motion.div>
     </section>
   );

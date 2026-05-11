@@ -6,19 +6,19 @@ const events = [
   {
     name: "The Town & Lollapalooza",
     tag: "Festival",
-    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAy4fI9rT2H33r4PdSDjEOwJWgpdh8uA49ZsNIO5dhSMoWLFfWZDWQ2b8GKjm5Jf5FAnWwnsIUeHBimjPregcAOy6GVeQcCQSMOKfLv720NXRdbFtitdKJ9PZ-69lSNufmgXwwUArGJOp5TViIQxII0rArYHdprQHwuU8XeMxukSg5WIzKvjf4X0gblFfQNSoQFXKKr0rPN3XPtLk_AHjIEwvht5_jPxAGABT9v-l0Tl1pQxmGbFXAdEvEUZgNDPYQO6YFh1stqkXw",
+    img: "https://musicnonstop.uol.com.br/wp-content/uploads/2020/03/Lollapalooza-Brasill-1536x864.jpg",
     offset: 0,
   },
   {
     name: "BGS & Gamescom",
     tag: "Gaming",
-    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCy5wjMUokun5P7DUpmTlOBFbL8PCoFQC7E7p_E3Hax47PjzaFIW7wYpRFdII99vY8abgd4CEvMYmyqyw3cnwmOAjpYes-drkjUV3ZQVhASx9ThUA0yvg39Q943jlTp5g-nWirrJkUCVD8YWjpDm6-GgtcNlKxKhukJi1ef3APwOAf3JN-aUJojiGNrhYU9-k0qFM86zaOXgbBbJFiZQIClnH7SP38V5d97Kkm6acM8qt6dZ5-bjBWkZpPH2iJxca5QZVTXne4d1Mo",
+    img: "https://emtodolugar.facha.edu.br/wp-content/uploads/2023/10/20230928_16303617_bgs-2019-publico.jpg",
     offset: 0,
   },
   {
     name: "CCXP",
     tag: "Cultura",
-    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBl1gJ8nW8lk13taQE00ZzQFbzOFsyrkqyUnde5PyV1A1wsJcoJivqvwTmotL0wHJ61dSJrcXxhp1-TrxjDr3tT2ULQQ2y1mf0AT43UvJ6y07ovU1w91HhUBcSao28ZTlzliie-lxO89yk_AlHiUCE4W799b9N-1Ns5hGVZNztVFfzabqyrnyf3d3VlHU8x-yfXE89mV53Vz5pEr-SWPjUUrBwBT3WVJJ63I5GaNwurKLmFs_v_qEcEol02Vet8JL9eqCNDYyyxd3s",
+    img: "/ccxp-banner.webp",
     offset: 0,
   },
 ];

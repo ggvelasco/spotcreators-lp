@@ -80,7 +80,7 @@ export default function DNA() {
     <section
       ref={ref}
       id="dna"
-      className="py-40 px-6 md:px-20 relative overflow-hidden"
+      className="py-25 px-6 md:px-20 relative overflow-hidden"
     >
       {/* BG accent */}
       {/* <div className="absolute -top-40 -left-40 w-125 h-125 bg-primary/40 rounded-full blur-[100px]" /> */}

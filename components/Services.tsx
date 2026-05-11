@@ -41,7 +41,7 @@ export default function Services() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section ref={ref} id="servicos" className="py-40 px-6 md:px-10 relative">
+    <section ref={ref} id="servicos" className="py-10 px-6 md:px-10 relative">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
