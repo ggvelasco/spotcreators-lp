@@ -28,7 +28,7 @@ export default function Events() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section ref={ref} id="eventos" className="py-40 px-6 md:px-10 relative">
+    <section ref={ref} id="eventos" className="py-20 px-6 md:px-10 relative">
       <div className="max-w-7xl mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}

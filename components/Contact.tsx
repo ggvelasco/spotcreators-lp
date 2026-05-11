@@ -3,10 +3,7 @@ import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 
 type ContactType = null | "influencer" | "marca";
-
-// ─── Emails de destino (troque pelos reais) ───────────────────────────────
-const EMAIL_INFLUENCER = "creators@spotcreators.com.br";
-const EMAIL_MARCA = "comercial@spotcreators.com.br";
+type FormStatus = "idle" | "loading" | "success" | "error";
 
 // ─── Ícones ───────────────────────────────────────────────────────────────
 const IconStar = () => (
@@ -45,7 +42,25 @@ const IconArrowLeft = () => (
   </svg>
 );
 
-// ─── Componente de campo reutilizável ─────────────────────────────────────
+const Spinner = () => (
+  <svg className="animate-spin w-5 h-5" viewBox="0 0 24 24" fill="none">
+    <circle
+      className="opacity-25"
+      cx="12"
+      cy="12"
+      r="10"
+      stroke="currentColor"
+      strokeWidth="4"
+    />
+    <path
+      className="opacity-75"
+      fill="currentColor"
+      d="M4 12a8 8 0 018-8v8H4z"
+    />
+  </svg>
+);
+
+// ─── Campo reutilizável ───────────────────────────────────────────────────
 function Field({
   id,
   label,
@@ -54,6 +69,7 @@ function Field({
   focused,
   setFocused,
   as,
+  options,
 }: {
   id: string;
   label: string;
@@ -62,6 +78,7 @@ function Field({
   focused: string | null;
   setFocused: (v: string | null) => void;
   as?: "textarea" | "select";
+  options?: { value: string; label: string }[];
 }) {
   const baseClass = `w-full bg-transparent border-0 border-b-2 py-4 text-white text-base transition-all duration-300 focus:outline-none placeholder:text-white/20 ${
     focused === id ? "border-primary" : "border-white/10"
@@ -75,6 +92,7 @@ function Field({
       {as === "textarea" ? (
         <textarea
           rows={3}
+          name={id}
           placeholder={placeholder}
           onFocus={() => setFocused(id)}
           onBlur={() => setFocused(null)}
@@ -82,6 +100,7 @@ function Field({
         />
       ) : as === "select" ? (
         <select
+          name={id}
           onFocus={() => setFocused(id)}
           onBlur={() => setFocused(null)}
           className={`${baseClass} cursor-pointer`}
@@ -91,40 +110,16 @@ function Field({
           <option value="" disabled className="bg-[#141414]">
             {placeholder}
           </option>
-          <option value="entretenimento" className="bg-[#141414]">
-            Entretenimento
-          </option>
-          <option value="games" className="bg-[#141414]">
-            Games
-          </option>
-          <option value="musica" className="bg-[#141414]">
-            Música
-          </option>
-          <option value="humor" className="bg-[#141414]">
-            Humor
-          </option>
-          <option value="lifestyle" className="bg-[#141414]">
-            Lifestyle
-          </option>
-          <option value="moda" className="bg-[#141414]">
-            Moda & Beleza
-          </option>
-          <option value="esportes" className="bg-[#141414]">
-            Esportes
-          </option>
-          <option value="tech" className="bg-[#141414]">
-            Tech
-          </option>
-          <option value="arte" className="bg-[#141414]">
-            Arte & Design
-          </option>
-          <option value="outro" className="bg-[#141414]">
-            Outro
-          </option>
+          {(options ?? []).map((o) => (
+            <option key={o.value} value={o.value} className="bg-[#141414]">
+              {o.label}
+            </option>
+          ))}
         </select>
       ) : (
         <input
           type={type}
+          name={id}
           placeholder={placeholder}
           onFocus={() => setFocused(id)}
           onBlur={() => setFocused(null)}
@@ -134,6 +129,31 @@ function Field({
     </div>
   );
 }
+
+const nichoOptions = [
+  { value: "entretenimento", label: "Entretenimento" },
+  { value: "games", label: "Games" },
+  { value: "musica", label: "Música" },
+  { value: "humor", label: "Humor" },
+  { value: "lifestyle", label: "Lifestyle" },
+  { value: "moda", label: "Moda & Beleza" },
+  { value: "esportes", label: "Esportes" },
+  { value: "tech", label: "Tech" },
+  { value: "arte", label: "Arte & Design" },
+  { value: "outro", label: "Outro" },
+];
+
+const segmentoOptions = [
+  { value: "alimentacao", label: "Alimentação & Bebidas" },
+  { value: "moda", label: "Moda & Lifestyle" },
+  { value: "tech", label: "Tecnologia" },
+  { value: "games", label: "Games & E-Sports" },
+  { value: "beleza", label: "Beleza & Saúde" },
+  { value: "financeiro", label: "Financeiro" },
+  { value: "entretenimento", label: "Entretenimento" },
+  { value: "varejo", label: "Varejo" },
+  { value: "outro", label: "Outro" },
+];
 
 // ─── Tela de seleção ──────────────────────────────────────────────────────
 function TypeSelector({
@@ -154,8 +174,6 @@ function TypeSelector({
         Selecione o perfil que melhor descreve você para que possamos te
         direcionar ao time certo.
       </p>
-
-      {/* Botão Influencer */}
       <motion.button
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
@@ -172,7 +190,7 @@ function TypeSelector({
         />
         <div className="flex items-center gap-4 relative z-10">
           <div
-            className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300"
+            className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
             style={{ background: "rgba(255,209,0,0.12)", color: "#ffd100" }}
           >
             <IconStar />
@@ -190,8 +208,6 @@ function TypeSelector({
           </div>
         </div>
       </motion.button>
-
-      {/* Botão Marca */}
       <motion.button
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
@@ -208,7 +224,7 @@ function TypeSelector({
         />
         <div className="flex items-center gap-4 relative z-10">
           <div
-            className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300"
+            className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
             style={{
               background: "rgba(255,255,255,0.08)",
               color: "rgba(255,255,255,0.6)",
@@ -238,21 +254,33 @@ function InfluencerForm({
   focused,
   setFocused,
   onSubmit,
+  status,
 }: {
   focused: string | null;
   setFocused: (v: string | null) => void;
-  onSubmit: () => void;
+  onSubmit: (data: Record<string, string>) => void;
+  status: FormStatus;
 }) {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    const data: Record<string, string> = {};
+    fd.forEach((v, k) => {
+      data[k] = v.toString();
+    });
+    onSubmit(data);
+  };
+
   return (
-    <motion.div
+    <motion.form
       key="influencer-form"
+      onSubmit={handleSubmit}
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -16 }}
       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       className="space-y-7"
     >
-      {/* Badge do tipo */}
       <div className="flex items-center gap-2 pb-2 border-b border-white/[0.06]">
         <div className="w-5 h-5 text-primary">
           <IconStar />
@@ -261,10 +289,9 @@ function InfluencerForm({
           Influencer
         </span>
         <span className="text-white/20 text-[10px] ml-1">
-          → {EMAIL_INFLUENCER}
+          → parcerias@spotcreators.com.br
         </span>
       </div>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-7">
         <Field
           id="nome"
@@ -306,6 +333,7 @@ function InfluencerForm({
           focused={focused}
           setFocused={setFocused}
           as="select"
+          options={nichoOptions}
         />
         <Field
           id="cidade"
@@ -323,19 +351,31 @@ function InfluencerForm({
         setFocused={setFocused}
         as="textarea"
       />
-
+      {status === "error" && (
+        <p className="text-red-400 text-xs text-center">
+          Erro ao enviar. Tente novamente ou entre em contato pelo Instagram.
+        </p>
+      )}
       <motion.button
-        whileHover={{
-          scale: 1.02,
-          boxShadow: "0 20px 50px rgba(255,209,0,0.3)",
-        }}
-        whileTap={{ scale: 0.97 }}
-        onClick={onSubmit}
-        className="w-full kinetic-gradient text-on-primary font-headline font-black py-5 rounded-2xl text-sm uppercase tracking-widest"
+        type="submit"
+        disabled={status === "loading"}
+        whileHover={
+          status !== "loading"
+            ? { scale: 1.02, boxShadow: "0 20px 50px rgba(255,209,0,0.3)" }
+            : {}
+        }
+        whileTap={status !== "loading" ? { scale: 0.97 } : {}}
+        className="w-full kinetic-gradient text-on-primary font-headline font-black py-5 rounded-2xl text-sm uppercase tracking-widest flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed"
       >
-        Quero fazer parte ✦
+        {status === "loading" ? (
+          <>
+            <Spinner /> Enviando...
+          </>
+        ) : (
+          "Quero fazer parte ✦"
+        )}
       </motion.button>
-    </motion.div>
+    </motion.form>
   );
 }
 
@@ -344,21 +384,33 @@ function MarcaForm({
   focused,
   setFocused,
   onSubmit,
+  status,
 }: {
   focused: string | null;
   setFocused: (v: string | null) => void;
-  onSubmit: () => void;
+  onSubmit: (data: Record<string, string>) => void;
+  status: FormStatus;
 }) {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    const data: Record<string, string> = {};
+    fd.forEach((v, k) => {
+      data[k] = v.toString();
+    });
+    onSubmit(data);
+  };
+
   return (
-    <motion.div
+    <motion.form
       key="marca-form"
+      onSubmit={handleSubmit}
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -16 }}
       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       className="space-y-7"
     >
-      {/* Badge do tipo */}
       <div className="flex items-center gap-2 pb-2 border-b border-white/[0.06]">
         <div className="w-5 h-5 text-white/50">
           <IconBriefcase />
@@ -366,9 +418,10 @@ function MarcaForm({
         <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/50">
           Marca
         </span>
-        <span className="text-white/20 text-[10px] ml-1">→ {EMAIL_MARCA}</span>
+        <span className="text-white/20 text-[10px] ml-1">
+          → comercial@spotcreators.com.br
+        </span>
       </div>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-7">
         <Field
           id="marca"
@@ -402,6 +455,7 @@ function MarcaForm({
           focused={focused}
           setFocused={setFocused}
           as="select"
+          options={segmentoOptions}
         />
       </div>
       <Field
@@ -412,20 +466,32 @@ function MarcaForm({
         setFocused={setFocused}
         as="textarea"
       />
-
+      {status === "error" && (
+        <p className="text-red-400 text-xs text-center">
+          Erro ao enviar. Tente novamente ou entre em contato pelo Instagram.
+        </p>
+      )}
       <motion.button
-        whileHover={{
-          scale: 1.02,
-          boxShadow: "0 20px 40px rgba(255,255,255,0.08)",
-        }}
-        whileTap={{ scale: 0.97 }}
-        onClick={onSubmit}
-        className="w-full font-headline font-black py-5 rounded-2xl text-sm uppercase tracking-widest transition-all border border-white/20 hover:border-white/40 text-white"
+        type="submit"
+        disabled={status === "loading"}
+        whileHover={
+          status !== "loading"
+            ? { scale: 1.02, boxShadow: "0 20px 40px rgba(255,255,255,0.08)" }
+            : {}
+        }
+        whileTap={status !== "loading" ? { scale: 0.97 } : {}}
+        className="w-full font-headline font-black py-5 rounded-2xl text-sm uppercase tracking-widest transition-all border border-white/20 hover:border-white/40 text-white flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed"
         style={{ background: "rgba(255,255,255,0.06)" }}
       >
-        Iniciar conversa →
+        {status === "loading" ? (
+          <>
+            <Spinner /> Enviando...
+          </>
+        ) : (
+          "Iniciar conversa →"
+        )}
       </motion.button>
-    </motion.div>
+    </motion.form>
   );
 }
 
@@ -459,16 +525,32 @@ export default function Contact() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const [focused, setFocused] = useState<string | null>(null);
   const [contactType, setContactType] = useState<ContactType>(null);
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<FormStatus>("idle");
 
   const emailDestino =
-    contactType === "influencer" ? EMAIL_INFLUENCER : EMAIL_MARCA;
+    contactType === "influencer"
+      ? "parcerias@spotcreators.com.br"
+      : "comercial@spotcreators.com.br";
+
+  const handleSubmit = async (data: Record<string, string>) => {
+    setStatus("loading");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: contactType, ...data }),
+      });
+      if (!res.ok) throw new Error();
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
+  };
 
   return (
     <section ref={ref} id="contato" className="py-40 px-6 relative">
       <div className="max-w-7xl mx-auto">
         <div className="glass-card rounded-[3rem] p-10 md:p-20 relative">
-          {/* Blob isolado */}
           <div className="absolute inset-0 rounded-[3rem] overflow-hidden pointer-events-none">
             <div className="absolute top-0 right-0 w-96 h-96 bg-primary/[0.06] blur-[80px] rounded-full -translate-y-1/2 translate-x-1/3" />
           </div>
@@ -529,7 +611,6 @@ export default function Contact() {
                 transition={{ delay: 0.3 }}
                 className="space-y-6"
               >
-                {/* Email dinâmico baseado no tipo selecionado */}
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={emailDestino}
@@ -571,39 +652,39 @@ export default function Contact() {
               className="bg-white/[0.03] rounded-3xl p-8 md:p-10 border border-white/[0.07]"
             >
               <AnimatePresence mode="wait">
-                {sent ? (
+                {status === "success" ? (
                   <SuccessScreen key="success" type={contactType} />
                 ) : contactType === null ? (
                   <TypeSelector key="selector" onSelect={setContactType} />
                 ) : (
                   <>
-                    {/* Botão voltar */}
                     <motion.button
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       onClick={() => {
                         setContactType(null);
-                        setSent(false);
+                        setStatus("idle");
                       }}
                       className="flex items-center gap-2 text-white/30 hover:text-white/70 text-xs font-bold uppercase tracking-widest mb-7 transition-colors"
                     >
                       <IconArrowLeft />
                       Voltar
                     </motion.button>
-
                     {contactType === "influencer" ? (
                       <InfluencerForm
                         key="influencer"
                         focused={focused}
                         setFocused={setFocused}
-                        onSubmit={() => setSent(true)}
+                        onSubmit={handleSubmit}
+                        status={status}
                       />
                     ) : (
                       <MarcaForm
                         key="marca"
                         focused={focused}
                         setFocused={setFocused}
-                        onSubmit={() => setSent(true)}
+                        onSubmit={handleSubmit}
+                        status={status}
                       />
                     )}
                   </>
