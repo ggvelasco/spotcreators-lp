@@ -277,4 +277,25 @@ export const creators: Creator[] = [
     ],
     updatedAt: "Mar/2025",
   },
+  {
+    name: "LALA",
+    handle: "@olalaista",
+    tags: "Pop • Humor • Geek",
+    img: "/influencers/olala.webp",
+    location: "São Paulo, SP",
+    bio: "Lala tem foco em entretenimento e humor, com conteúdo voltado principalmente para reacts, comédia, desafios e tendências da internet. O tom predominante é descontraído, caótico e autêntico, criando uma forte conexão com o público através de comentários espontâneos e edições dinâmicas. Sua audiência é majoritariamente jovem e altamente conectada à cultura digital, memes, universo gamer e conteúdos de humor online. Além dos reacts, também compartilha desafios, participações em eventos, trends e conteúdos voltados à comunidade e interação com seguidores.​",
+    topics: ["Pop", "Humor", "Geek"],
+    social: {
+      instagram: 159000,
+      tiktok: 2800000,
+      youtube: 2430000,
+    },
+    audience: [
+      { range: "18–24", percentage: 43 },
+      { range: "25–34", percentage: 38 },
+      { range: "35–44", percentage: 11 },
+      { range: "45+", percentage: 8 },
+    ],
+    updatedAt: "Mar/2026",
+  },
 ];

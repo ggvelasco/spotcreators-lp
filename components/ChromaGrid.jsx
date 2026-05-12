@@ -105,12 +105,11 @@ export const ChromaGrid = ({
   return (
     <div
       ref={rootRef}
-      className={`chroma-grid ${className}`}
+      // 1. Trocamos o comportamento do container para flex, permitindo a quebra de linha e centralização
+      className={`chroma-grid flex flex-wrap justify-center gap-6 ${className}`}
       style={{
         "--r": `${radius}px`,
-        // 3. Passamos o número de colunas dinâmico para o CSS
         "--cols": responsiveCols,
-        // 4. Calculamos as linhas automaticamente com base no total de itens
         "--rows": Math.ceil(data.length / responsiveCols),
       }}
       onPointerMove={handleMove}
@@ -119,8 +118,9 @@ export const ChromaGrid = ({
       {data.map((c, i) => (
         <article
           key={i}
-          // 5. Removi aquelas classes erradas daqui de dentro!
-          className="chroma-card w-full"
+          // 2. Definimos a largura dos cards usando Tailwind para respeitar suas colunas dinâmicas (2, 3 e 4)
+          // Descontamos um valor aproximado do 'gap-6' para evitar quebra indesejada
+          className="chroma-card w-[calc(50%-0.75rem)] sm:w-[calc(33.333%-1rem)] lg:w-[calc(25%-1.125rem)]"
           onMouseMove={handleCardMove}
           onClick={() => handleCardClick(c, i)}
           style={{
