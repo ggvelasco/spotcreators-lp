@@ -1,7 +1,8 @@
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import dynamic from "next/dynamic";
+import PrismaticBurst from "./PrismaticBurst";
 
 const Cover = dynamic(
   () => import("@/src/components/ui/cover").then((mod) => mod.Cover),
@@ -10,7 +11,6 @@ const Cover = dynamic(
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -20,58 +20,25 @@ export default function Hero() {
   const yTitle = useTransform(scrollYProgress, [0, 1], [0, -120]);
   const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
-  // ── Lazy load do vídeo após window.load ───────────────────────────────
-  // O vídeo não tem src no HTML — só é setado depois que a página toda
-  // terminou de carregar. Até lá, o poster (primeiro frame) é exibido.
-  useEffect(() => {
-    const loadVideo = () => {
-      const video = videoRef.current;
-      if (!video) return;
-      video.src = "/hero-bg.mp4"; // coloque seu vídeo em /public/hero-bg.mp4
-      video.load();
-      video.play().catch(() => {
-        // Autoplay bloqueado em alguns browsers — silencia o erro
-      });
-    };
-
-    if (document.readyState === "complete") {
-      loadVideo();
-    } else {
-      window.addEventListener("load", loadVideo, { once: true });
-    }
-
-    return () => {
-      window.removeEventListener("load", loadVideo);
-    };
-  }, []);
-
   return (
     <section
       ref={ref}
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-black"
     >
-      {/* ── 1. VIDEO BACKGROUND ─────────────────────────────────────────── */}
       <div className="absolute inset-0 z-0">
-        {/* Vídeo — sem src intencional, setado pelo useEffect após window.load */}
-        <video
-          ref={videoRef}
-          poster="/hero-poster.webp" // primeiro frame exportado do vídeo
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="none"
-          className="absolute inset-0 w-full h-full object-cover"
+        <PrismaticBurst
+          animationType="rotate3d"
+          intensity={1.4}
+          speed={0.5}
+          distort={0}
+          paused={false}
+          offset={{ x: 0, y: 0 }}
+          hoverDampness={0.25}
+          rayCount={0}
+          mixBlendMode="screen"
+          colors={["#ffd100", "#ff7a18", "#ffffff"]}
         />
-
-        {/* Overlay escuro para garantir legibilidade do texto */}
-        <div className="absolute inset-0 bg-black/60" />
-
-        {/* Gradiente nas bordas para fundir com o resto do site */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80" />
       </div>
-
-      {/* ── 2. CONTENT LAYER ────────────────────────────────────────────── */}
       <motion.div
         style={{ y: yTitle, opacity }}
         className="relative z-10 text-center max-w-7xl px-6 pt-24"
@@ -81,7 +48,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="inline-flex items-center gap-3 bg-white/[0.04] border border-white/[0.08] px-5 py-2.5 rounded-full mb-10 backdrop-blur-sm"
+          className="inline-flex items-center gap-3 bg-white/4 border border-white/8 px-5 py-2.5 rounded-full mb-10 backdrop-blur-sm"
         >
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
