@@ -92,7 +92,7 @@ export default function DNA() {
             initial={{ opacity: 0, x: -20 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="inline-block font-label font-bold text-[10px] tracking-[0.35em] uppercase text-primary mb-6"
+            className="inline-block font-label font-bold text-[10px] tracking-[0.35em] uppercase text-primary mb-6 py-[40px]"
           >
             Nosso DNA
           </motion.span>
@@ -101,23 +101,23 @@ export default function DNA() {
             initial={{ opacity: 0, y: 40 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="font-headline font-black tracking-tighter leading-[0.85] mb-12"
-            style={{ fontSize: "clamp(3.5rem, 8vw, 7rem)" }}
+            className="font-headline font-black tracking-tighter leading-[0.85] mb-12 overflow-visible"
+            style={{ fontSize: "clamp(3.5rem, 4vw, 7rem)" }}
           >
-            MUITO <br />
+            Somos uma aceleradora focada em <br />
             <span
-              className="italic px-5 leading-[1.2]"
+              className="italic leading-[1.2] inline-block pr-2 overflow-visible"
               style={{
                 background: "linear-gradient(135deg, #ffe135, #ffd100)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
+                transform: "translateZ(0)",
               }}
             >
-              ALÉM
+              resultados reais
             </span>
-            <br />
-            DO ÓBVIO
+            <br />e parcerias duradouras.
           </motion.h2>
 
           <motion.div
@@ -126,12 +126,7 @@ export default function DNA() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="space-y-6 text-on-surface-variant text-lg leading-relaxed max-w-lg"
           >
-            <p className="border-l-[3px] border-primary pl-5 py-1 text-white/80 font-medium">
-              Somos uma aceleradora focada em{" "}
-              <span className="text-white font-bold">resultados reais</span> e
-              parcerias duradouras.
-            </p>
-            <p>
+            <p className="border-l-[3px] border-primary pl-5 py-1">
               Na Spot Creators, não apenas agenciamos — nós aceleramos carreiras
               e potencializamos marcas por meio de conteúdo autêntico. Com
               inteligência de mercado e foco em performance, transformamos

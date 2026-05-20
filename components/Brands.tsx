@@ -65,12 +65,12 @@ function BrandItem({
           role="img"
           viewBox="0 0 24 24"
           aria-label={name}
-          className="w-5 h-5 flex-shrink-0 fill-white group-hover:fill-primary transition-colors duration-300"
+          className="w-14 h-16 flex-shrink-0 fill-white group-hover:fill-primary transition-colors duration-300"
         >
           <path d={icon.path} />
         </svg>
       )}
-      <span className="font-headline font-black text-xl tracking-tighter text-white group-hover:text-primary transition-colors duration-300 whitespace-nowrap">
+      <span className="font-headline font-black text-5xl tracking-tighter text-white group-hover:text-primary transition-colors duration-300 whitespace-nowrap">
         {name}
       </span>
     </div>
