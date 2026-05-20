@@ -301,7 +301,7 @@ export const creators: Creator[] = [
   {
     name: "Cururu",
     handle: "@cururutwtv",
-    tags: "Pop • Humor • Geek",
+    tags: "Humor • Matemática • Games",
     img: "/influencers/cururu.jpeg",
     location: "Rio de Janeiro, RJ",
     bio: "Cururu é professor de matemática e gamer sempre carregado de uma dose considerável de humor. O foco principal é propagar diversão sempre estimulando o pensamento e o senso crítico. Seus conteúdos variam desde curiosidades e dicas para simplificar o raciocínio matemático até uma série que conta a história de um jogador de futebol do subúrbio no modo carreira do fifa.​",
