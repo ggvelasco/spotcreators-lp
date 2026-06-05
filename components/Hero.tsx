@@ -1,8 +1,7 @@
 "use client";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import dynamic from "next/dynamic";
-import PrismaticBurst from "./PrismaticBurst";
 
 const Cover = dynamic(
   () => import("@/src/components/ui/cover").then((mod) => mod.Cover),
@@ -11,6 +10,7 @@ const Cover = dynamic(
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -20,24 +20,47 @@ export default function Hero() {
   const yTitle = useTransform(scrollYProgress, [0, 1], [0, -120]);
   const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
+  useEffect(() => {
+    const loadVideo = () => {
+      const video = videoRef.current;
+      if (!video) return;
+
+      video.src = "/hero-bg.mp4";
+      video.load();
+      video.play().catch(() => {});
+    };
+
+    if (document.readyState === "complete") {
+      loadVideo();
+    } else {
+      window.addEventListener("load", loadVideo, { once: true });
+    }
+
+    return () => {
+      window.removeEventListener("load", loadVideo);
+    };
+  }, []);
+
   return (
     <section
       ref={ref}
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-black"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
     >
       <div className="absolute inset-0 z-0">
-        <PrismaticBurst
-          animationType="rotate3d"
-          intensity={1.4}
-          speed={0.5}
-          distort={0}
-          paused={false}
-          offset={{ x: 0, y: 0 }}
-          hoverDampness={0.25}
-          rayCount={0}
-          mixBlendMode="screen"
-          colors={["#ffd100", "#ff7a18", "#ffffff"]}
+        <video
+          ref={videoRef}
+          poster="/hero-poster.webp"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="none"
+          className="absolute inset-0 h-full w-full object-cover"
         />
+
+        <div className="absolute inset-0 bg-black/60" />
+
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80" />
       </div>
       <motion.div
         style={{ y: yTitle, opacity }}
